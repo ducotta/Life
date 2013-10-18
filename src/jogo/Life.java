@@ -10,14 +10,14 @@ public class Life {
 	}
 
 	public void inicializar() {
-		for (int i = 1; i < this.qtdColunas - 1; i++) {
-			for (int j = 1; j < this.qtdColunas - 1; i++) {
+		for (int i = 1; i < (this.qtdColunas - 1); i++) {
+			for (int j = 1; j < (this.qtdColunas - 1); j++) {
 				matriz[i][j] = (int) (Math.random() * 1.5);
 			}
 		}
 	}
-	
-	public void inicializar(int matriz[][]){
+
+	public void inicializar(int matriz[][]) {
 		this.matriz = matriz;
 	}
 
@@ -38,39 +38,47 @@ public class Life {
 		System.out.println();
 	}
 
+	private int pegarVizinho(int i, int j){
+		try{
+			return matriz[i][j];
+		}catch(Exception e){
+			return 0;
+		}
+	}
+
 	public int vizinhos(int i, int j) {
-		return matriz[i - 1][j - 1] + matriz[i - 1][j] + matriz[i - 1][j + 1]
-				+ matriz[i][j - 1] + matriz[i][j + 1] + matriz[i + 1][j - 1]
-				+ matriz[i + 1][j] + matriz[i + 1][j + 1];
+		return pegarVizinho(i - 1,j - 1) +pegarVizinho(i - 1,j )+pegarVizinho(i - 1,j+1)
+				+pegarVizinho(i,j - 1)+pegarVizinho(i ,j + 1)
+				+pegarVizinho(i + 1,j - 1)+pegarVizinho(i + 1,j)+pegarVizinho(i + 1,j + 1);
 
 	}
-	
-	public int[][] iteracao(){
+
+	public int[][] iteracao() {
 		int aux[][] = new int[this.qtdColunas][this.qtdColunas];
-		
+
 		for (int i = 0; i < qtdColunas; i++) {
 			for (int j = 0; j < qtdColunas; j++) {
-				if(matriz[i][j] == 1){
-					if(vizinhos(i, j) < 2 || vizinhos(i, j) > 3){
+				if (matriz[i][j] == 1) {
+					if (vizinhos(i, j) < 2 || vizinhos(i, j) > 3) {
 						aux[i][j] = 0;
-					}else
+					} else
 						aux[i][j] = 1;
-				}else{
-					if(vizinhos(i, j) == 3){
+				} else {
+					if (vizinhos(i, j) == 3) {
 						aux[i][j] = 1;
-					}else
-						aux[i][j] =0;
+					} else
+						aux[i][j] = 0;
 				}
 			}
 		}
-		
+
 		return aux;
 	}
-	
-	public void simulaVida (int quant){
+
+	public void simulaVida(int quant) {
 		int i;
-		
-		for (i = 0; i < quant; i++){
+
+		for (i = 0; i < quant; i++) {
 			imprimeTabuleiro();
 			matriz = iteracao();
 		}
