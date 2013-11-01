@@ -2,7 +2,7 @@ package jogo;
 
 public class Life {
 	private int qtdColunas;
-	private int matriz[][];
+	public int matriz[][];
 
 	public Life(int qtdColunas) {
 		this.qtdColunas = qtdColunas;
